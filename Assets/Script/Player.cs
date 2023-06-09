@@ -4,27 +4,24 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private SpriteRenderer player_sprite_rend;
+
     public enum PlayerState
     {
-        Stop,   // 정지, 일시정지
         Run,    // 달리기
         Jump,   // 점프
-        Die     // 종료
     }
     
     private PlayerState playerState;
 
-    private float g_acceleration;   // 중력 가속도 (현실 중력 가속도: 9.8f)
-    private float jumpPower;        // 점프력
-    private float jumpTime;         // 점프 이후 경과시간
-    private float InitHeight_Y;     //오브젝트의 초기 높이
+    // 플레이어의 체력, 점수
+    public int health, score;
 
-    public int health;
-    public int score;
+    // 플레이어의 최댓값, 최솟값
+    public float player_min_x, player_max_x, player_min_y, player_max_y;
 
-    private SpriteRenderer player_sprite_rend;
-
-    public float player_min_x, player_max_x, player_min_y, player_max_y; // 플레이어의 최댓값, 최솟값
+    // 중력 가속도 (현실 중력 가속도: 9.8f), 점프력, 점프 이후 경과시간, 오브젝트의 초기 높이
+    private float g_acceleration, jumpPower, jumpTime, InitHeight_Y;
 
     void Start()
     {
@@ -35,10 +32,10 @@ public class Player : MonoBehaviour
         jumpPower = 25.0f;
         jumpTime = 0.0f;
 
-        playerState = PlayerState.Run;
-
         health = 1;
         score = 0;
+
+        playerState = PlayerState.Run;
     }
 
     void Update()
@@ -48,23 +45,19 @@ public class Player : MonoBehaviour
 
         switch (playerState)
         {
-            case PlayerState.Stop:
-                break;
             case PlayerState.Run:
                 if (Input.GetKeyDown(KeyCode.Space)) playerState = PlayerState.Jump;
                 break;
             case PlayerState.Jump:
                 Jump();
                 break;
-            case PlayerState.Die:
-                break;
         }
 
+        // Collider
         player_min_x = playerPosition.x - (playerSize.x / 2);
         player_max_x = playerPosition.x + (playerSize.x / 2);
         player_min_y = playerPosition.y - (playerSize.y / 2);
         player_max_y = playerPosition.y + (playerSize.y / 2);
-
     }
 
    void Jump()
@@ -81,7 +74,5 @@ public class Player : MonoBehaviour
 
             playerState = PlayerState.Run;
         }
-    }
-
-    
+    } 
 }

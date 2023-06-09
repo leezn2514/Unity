@@ -28,7 +28,6 @@ public class ObjectPool : MonoBehaviour
         }
     }
 
-
     void Update()
     {
         currentTime += Time.deltaTime;
@@ -41,13 +40,8 @@ public class ObjectPool : MonoBehaviour
                 
                 enemy.SetActive(true);
             }
-
             currentTime = 0; // 현재 시간 초기화
             createTime = Random.Range(minTime, maxTime);
         }
-
-
-
     }
-
 }

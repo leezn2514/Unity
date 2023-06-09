@@ -20,7 +20,7 @@ public class Collider_Box : MonoBehaviour
         posY = transform.position.y;
         p_posY = 1;
 
-        objectPool = GameObject.Find("ObstacleManager").GetComponent<ObjectPool>();
+        objectPool = GameObject.Find("GameManager").GetComponent<ObjectPool>();
         obstacle_sprite_rend = GetComponent<SpriteRenderer>();
 
         player = GameObject.FindObjectOfType<Player>();
@@ -29,16 +29,14 @@ public class Collider_Box : MonoBehaviour
     void Update()
     {
         // 이동
-        if(this.gameObject.tag == "Bush") transform.Translate(Vector2.left * speed * Time.deltaTime);
+        if (this.gameObject.tag == "Bush") transform.Translate(Vector2.left * speed * Time.deltaTime);
         if (this.gameObject.tag == "Pteranodon")
         {
             transform.Translate(new Vector2(-1, p_posY).normalized * speed * Time.deltaTime);
 
             if (transform.position.y >= 3.0f) p_posY = -1;
-            else if (transform.position.y <= 0) p_posY = 1;
-            
+            else if (transform.position.y <= 0) p_posY = 1;    
         }
-
 
         // 삭제
         if (this.gameObject.transform.position.x <= -10.0f)
